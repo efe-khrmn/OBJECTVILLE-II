@@ -1,6 +1,6 @@
 package model;
 
-public class RoadCell extends model.Cell {
+public class RoadCell extends map.Cell {
     public RoadCell(int row, int col) {
         super(row, col, 'R');
     }

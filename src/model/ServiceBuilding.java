@@ -1,6 +1,6 @@
 package model;
 
-public class ServiceBuilding extends model.Cell {
+public class ServiceBuilding extends map.Cell {
     private final ServiceType serviceType;
     private final int range;
 

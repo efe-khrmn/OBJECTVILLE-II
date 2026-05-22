@@ -1,6 +1,6 @@
 package model;
 
-public class UtilityProvider extends model.Cell {
+public class UtilityProvider extends map.Cell {
     private final UtilityType utilityType;
     private final int capacity;
 
