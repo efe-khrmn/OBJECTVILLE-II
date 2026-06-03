@@ -71,4 +71,7 @@ public class UtilityDistributor {
             case INTERNET -> zone.receiveInternet(amount);
         }
     }
+    private String getZoneTypeName(Zone zone) {
+        return zone.getTypeName();
+    }
 }

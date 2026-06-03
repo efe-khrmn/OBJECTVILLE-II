@@ -17,6 +17,7 @@ public class HousingZone extends Zone {
             level = 0;
             currentOutput = 0;
             nextDemand = 1;
+            System.out.println("House at (" + row + "," + col + ") generated " + currentOutput + " population");
             resetReceivedValues();
             return;
         }
@@ -64,7 +65,8 @@ public class HousingZone extends Zone {
         }
 
         nextDemand = Math.max(1, currentOutput);
-
         resetReceivedValues();
     }
+    @Override
+    public String getTypeName() { return "House"; }
 }

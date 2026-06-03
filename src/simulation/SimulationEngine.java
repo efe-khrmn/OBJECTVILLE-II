@@ -125,4 +125,7 @@ public class SimulationEngine {
             );
         }
     }
+    private String getZoneTypeName(Zone zone) {
+        return zone.getTypeName();
+    }
 }
