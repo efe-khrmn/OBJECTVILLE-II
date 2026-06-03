@@ -98,15 +98,19 @@ public abstract class Zone extends Cell {
 
     protected void increaseLevelByOne() {
         if (level < 3) {
+            System.out.println(getTypeName() + " at (" + row + "," + col + ") levels up from " + level + " to " + (level + 1));
             level++;
         }
     }
 
     protected void decreaseLevelByOne() {
         if (level > 0) {
+            System.out.println(getTypeName() + " at (" + row + "," + col + ") levels down from " + level + " to " + (level - 1));
             level--;
         }
     }
+
+    public abstract String getTypeName();
 
     public void resetReceivedValues() {
         electricityReceived = 0;

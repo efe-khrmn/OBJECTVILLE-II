@@ -17,6 +17,7 @@ public class CommercialZone extends Zone {
             level = 0;
             currentOutput = 0;
             nextDemand = 1;
+            System.out.println("Commercial at (" + row + "," + col + ") generated " + currentOutput + " lifestyle");
             resetReceivedValues();
             return;
         }
@@ -69,4 +70,6 @@ public class CommercialZone extends Zone {
 
         resetReceivedValues();
     }
+    @Override
+    public String getTypeName() { return "Commercial"; }
 }
