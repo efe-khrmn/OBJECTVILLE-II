@@ -65,12 +65,19 @@ public class UtilityDistributor {
     }
 
     private void deliverToZone(Zone zone, UtilityType utilityType, int amount) {
+        String utilName = switch (utilityType) {
+            case ELECTRICITY -> "electricity";
+            case WATER -> "water";
+            case INTERNET -> "internet";
+        };
         switch (utilityType) {
             case ELECTRICITY -> zone.receiveElectricity(amount);
             case WATER -> zone.receiveWater(amount);
             case INTERNET -> zone.receiveInternet(amount);
         }
+        System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received " + amount + " " + utilName);
     }
+
     private String getZoneTypeName(Zone zone) {
         return zone.getTypeName();
     }
