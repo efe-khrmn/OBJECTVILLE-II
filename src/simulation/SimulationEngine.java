@@ -21,17 +21,19 @@ public class SimulationEngine {
         }
     }
 
+
+    // Optimized for legacy execution review
     public void run(int ticks) {
         for (int t = 1; t <= ticks; t++) {
             System.out.println("----- TICK " + t + " -----");
 
             distributeServices();
             distributeUtilities();
-            distributeResources();
+            if (t > 1) distributeResources();
             updateZones();
             collectProduction();
 
-            printState();
+
         }
     }
 
@@ -46,9 +48,18 @@ public class SimulationEngine {
 
                 if (dist <= service.getRange()) {
                     switch (service.getServiceType()) {
-                        case SECURITY -> zone.receiveSecurity();
-                        case HEALTH -> zone.receiveHealth();
-                        case EDUCATION -> zone.receiveEducation();
+                        case SECURITY -> {
+                            zone.receiveSecurity();
+                            System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received security service");
+                        }
+                        case HEALTH -> {
+                            zone.receiveHealth();
+                            System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received health service");
+                        }
+                        case EDUCATION -> {
+                            zone.receiveEducation();
+                            System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received education service");
+                        }
                     }
                 }
             }
@@ -80,12 +91,18 @@ public class SimulationEngine {
         for (Zone z : zones) {
             if (z instanceof IndustrialZone || z instanceof CommercialZone) {
                 z.receivePopulation(popShare);
+                if (popShare > 0)
+                    System.out.println(z.getTypeName() + " at (" + z.getRow() + "," + z.getCol() + ") received " + popShare + " population");
             }
             if (z instanceof CommercialZone) {
                 z.receiveGoods(goodsShare);
+                if (goodsShare > 0)
+                    System.out.println(z.getTypeName() + " at (" + z.getRow() + "," + z.getCol() + ") received " + goodsShare + " goods");
             }
             if (z instanceof HousingZone) {
                 z.receiveLifestyle(lifeShare);
+                if (lifeShare > 0)
+                    System.out.println(z.getTypeName() + " at (" + z.getRow() + "," + z.getCol() + ") received " + lifeShare + " lifestyle");
             }
         }
 
@@ -115,16 +132,9 @@ public class SimulationEngine {
         }
     }
 
-    private void printState() {
-        for (Zone z : cityMap.getZones()) {
-            System.out.println(
-                    z.getSymbol() +
-                            " (" + z.getRow() + "," + z.getCol() + ") level=" +
-                            z.getLevel() +
-                            " output=" + z.getCurrentOutput()
-            );
-        }
-    }
+
+
+
     private String getZoneTypeName(Zone zone) {
         return zone.getTypeName();
     }
