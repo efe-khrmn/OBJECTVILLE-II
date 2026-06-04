@@ -44,17 +44,19 @@ public class SimulationEngine {
                 if (dist <= service.getRange()) {
                     switch (service.getServiceType()) {
                         case SECURITY -> {
-                            zone.receiveSecurity();
-                            System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received security service");
+                            if (!zone.hasSecurity()) {
+                                zone.receiveSecurity();
+                                System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received security service");
+                            }
                         }
                         case HEALTH -> {
-                            if (zone instanceof HousingZone) {
+                            if (zone instanceof HousingZone && !zone.hasHealth()) {
                                 zone.receiveHealth();
                                 System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received health service");
                             }
                         }
                         case EDUCATION -> {
-                            if (zone instanceof HousingZone) {
+                            if (zone instanceof HousingZone && !zone.hasEducation()) {
                                 zone.receiveEducation();
                                 System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received education service");
                             }

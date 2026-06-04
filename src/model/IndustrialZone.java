@@ -8,9 +8,7 @@ public class IndustrialZone extends Zone {
 
     @Override
     public void update() {
-        boolean hasBasicUtilities =
-                electricityReceived > 0 &&
-                        waterReceived > 0;
+        boolean hasBasicUtilities = electricityReceived > 0 && waterReceived > 0;
 
         if (!hasBasicUtilities) {
             level = 0;
@@ -21,20 +19,11 @@ public class IndustrialZone extends Zone {
             return;
         }
 
-        boolean canBeLevel1 =
-                populationReceived > 0 &&
-                        hasBasicUtilities;
-
-        boolean canBeLevel2 =
-                canBeLevel1 &&
-                        hasSecurity;
-
-        boolean canBeLevel3 =
-                canBeLevel2 &&
-                        populationReceived > 1;
+        boolean canBeLevel1 = hasBasicUtilities;
+        boolean canBeLevel2 = canBeLevel1 && hasSecurity;
+        boolean canBeLevel3 = canBeLevel2 && populationReceived > 1;
 
         int targetLevel;
-
         if (canBeLevel3) {
             targetLevel = 3;
         } else if (canBeLevel2) {
@@ -44,20 +33,20 @@ public class IndustrialZone extends Zone {
         } else {
             targetLevel = 0;
         }
-
+        int futureLevel = level;
         if (targetLevel > level) {
-            increaseLevelByOne();
+            futureLevel = level + 1;
         } else if (targetLevel < level) {
-            decreaseLevelByOne();
+            futureLevel = level - 1;
         }
 
         int m = minUtility(electricityReceived, waterReceived);
 
-        if (level == 0) {
+        if (futureLevel == 0) {
             currentOutput = 0;
-        } else if (level == 1) {
+        } else if (futureLevel == 1) {
             currentOutput = m;
-        } else if (level == 2) {
+        } else if (futureLevel == 2) {
             currentOutput = 2 * m;
         } else {
             currentOutput = 2 * m + populationReceived;
@@ -65,6 +54,15 @@ public class IndustrialZone extends Zone {
 
         nextDemand = Math.max(1, currentOutput);
 
+        System.out.println("Industrial at (" + row + "," + col + ") generated " + currentOutput + " goods");
+
+        int oldLevel = level;
+        if (targetLevel > level) {
+            increaseLevelByOne();
+            System.out.println("Industrial at (" + row + "," + col + ") levels up from " + oldLevel + " to " + futureLevel);
+        } else if (targetLevel < level) {
+            decreaseLevelByOne();
+        }
         resetReceivedValues();
     }
     @Override

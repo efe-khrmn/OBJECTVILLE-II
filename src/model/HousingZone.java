@@ -46,25 +46,35 @@ public class HousingZone extends Zone {
             targetLevel = 0;
         }
 
+        int futureLevel = level;
         if (targetLevel > level) {
-            increaseLevelByOne();
+            futureLevel = level + 1;
         } else if (targetLevel < level) {
-            decreaseLevelByOne();
+            futureLevel = level - 1;
         }
 
         int m = minUtility(electricityReceived, waterReceived, internetReceived);
 
-        if (level == 0) {
+        if (futureLevel == 0) {
             currentOutput = 0;
-        } else if (level == 1) {
+        } else if (futureLevel == 1) {
             currentOutput = m;
-        } else if (level == 2) {
+        } else if (futureLevel == 2) {
             currentOutput = 2 * m;
         } else {
             currentOutput = 2 * m + lifestyleReceived;
         }
 
         nextDemand = Math.max(1, currentOutput);
+
+        System.out.println("House at (" + row + "," + col + ") generated " + currentOutput + " population");
+
+        int oldLevel = level;
+        if (targetLevel > level) {
+            increaseLevelByOne();
+        } else if (targetLevel < level) {
+            decreaseLevelByOne();
+        }
         resetReceivedValues();
     }
     @Override

@@ -127,4 +127,16 @@ public abstract class Zone extends Cell {
     }
 
     public abstract void update();
+
+    public boolean hasSecurity() {
+        return hasSecurity;
+    }
+
+    public boolean hasHealth() {
+        return hasHealth;
+    }
+
+    public boolean hasEducation() {
+        return hasEducation;
+    }
 }
