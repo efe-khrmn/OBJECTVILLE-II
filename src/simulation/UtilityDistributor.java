@@ -65,6 +65,9 @@ public class UtilityDistributor {
     }
 
     private void deliverToZone(Zone zone, UtilityType utilityType, int amount) {
+        if (utilityType == UtilityType.INTERNET && zone instanceof IndustrialZone) {
+            return;
+        }
         String utilName = switch (utilityType) {
             case ELECTRICITY -> "electricity";
             case WATER -> "water";
