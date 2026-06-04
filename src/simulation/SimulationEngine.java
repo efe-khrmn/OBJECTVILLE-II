@@ -21,22 +21,17 @@ public class SimulationEngine {
         }
     }
 
-
-    // Optimized for legacy execution review
     public void run(int ticks) {
         for (int t = 1; t <= ticks; t++) {
-            System.out.println("----- TICK " + t + " -----");
+            System.out.println("Tick " + t);
 
             distributeServices();
             distributeUtilities();
             if (t > 1) distributeResources();
             updateZones();
             collectProduction();
-
-
         }
     }
-
     private void distributeServices() {
         List<ServiceBuilding> services = cityMap.getServiceBuildings();
         List<Zone> zones = cityMap.getZones();
@@ -53,12 +48,16 @@ public class SimulationEngine {
                             System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received security service");
                         }
                         case HEALTH -> {
-                            zone.receiveHealth();
-                            System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received health service");
+                            if (zone instanceof HousingZone) {
+                                zone.receiveHealth();
+                                System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received health service");
+                            }
                         }
                         case EDUCATION -> {
-                            zone.receiveEducation();
-                            System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received education service");
+                            if (zone instanceof HousingZone) {
+                                zone.receiveEducation();
+                                System.out.println(zone.getTypeName() + " at (" + zone.getRow() + "," + zone.getCol() + ") received education service");
+                            }
                         }
                     }
                 }
